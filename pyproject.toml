@@ -14,7 +14,7 @@ evalh = "evalh.cli:main"
 dev = ["pytest>=9.1", "pytest-cov>=7.0", "ruff>=0.14", "mypy>=1.18"]
 
 [build-system]
-requires = ["hatchling>=1.27"]
+requires = ["hatchling>=1.32.4"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
