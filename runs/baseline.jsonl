@@ -1,0 +1,18 @@
+{"id": "plus-price", "answer": "The Plus plan costs 6 USD per month and includes unlimited notebooks and 10 GB of storage [billing-plans]."}
+{"id": "team-price", "answer": "The Team plan costs 10 USD per user per month and adds shared notebooks and admin controls [billing-plans]."}
+{"id": "free-limits", "answer": "The Free plan includes up to 3 notebooks and 100 MB of storage [billing-plans]."}
+{"id": "annual-discount", "answer": "Yes. Annual billing gives a 20 percent discount on Plus and Team [billing-plans]."}
+{"id": "refund-window", "answer": "Plus and Team subscriptions can be refunded within 14 days of the first payment. Request it from Settings, then Billing, then Request refund [refunds]."}
+{"id": "renewal-refund", "answer": "Renewals are not refunded, but you can cancel at any time and keep access until the end of the period [refunds]."}
+{"id": "refund-time", "answer": "Refunds go back to the original payment method within 5 to 10 business days [refunds]."}
+{"id": "export-formats", "answer": "You can export a notebook as Markdown or PDF from the notebook menu [export-data]."}
+{"id": "export-free", "answer": "Yes. Full account exports are available on every plan, including Free, and produce a ZIP file with every notebook in Markdown plus attachments [export-data]."}
+{"id": "export-link", "answer": "Export links expire after 24 hours [export-data]."}
+{"id": "share-roles", "answer": "On the Team plan you can share notebooks with teammates as viewer, commenter or editor [sharing]."}
+{"id": "two-factor", "answer": "Open Settings, go to Security and turn on two-factor authentication using an authenticator app [security]."}
+{"id": "encryption", "answer": "Yes. Notes are encrypted at rest with AES-256 and in transit with TLS 1.3 [security]."}
+{"id": "offline-web", "answer": "No. Offline mode is not available in the web app; the desktop and mobile apps keep a local copy so you can edit offline [offline-sync]."}
+{"id": "offline-conflict", "answer": "Inkwell marks the newer version as a conflict copy [offline-sync]."}
+{"id": "oos-stock", "answer": "I don't know, that is not covered by the documentation."}
+{"id": "oos-competitor", "answer": "I can only help with questions about using Inkwell Notes."}
+{"id": "oos-phone", "answer": "I don't know, that is not covered by the documentation."}

@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: Lint, types and tests (Python ${{ matrix.python }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.13", "3.14"]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.3.2
+        with:
+          python-version: ${{ matrix.python }}
+      - run: uv sync --locked
+      - name: Ruff lint
+        run: uv run ruff check .
+      - name: Ruff format
+        run: uv run ruff format --check .
+      - name: Mypy (strict)
+        run: uv run mypy
+      - name: Unit tests
+        run: uv run pytest --cov=evalh --cov-report=term-missing --cov-fail-under=90
+
+  eval-gate:
+    name: Evaluation gate
+    needs: checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.3.2
+        with:
+          python-version: "3.13"
+      - run: uv sync --locked
+      - name: Judge calibration (Cohen's kappa against human labels)
+        run: uv run evalh calibrate --human data/judge-calibration/human.jsonl --judge data/judge-calibration/judge.jsonl
+      - name: Candidate run must pass the gate
+        run: uv run evalh run --responses runs/candidate.jsonl --baseline runs/baseline.jsonl --json reports/candidate.json
+      - name: Regressed run must fail the gate
+        run: |
+          set +e
+          uv run evalh run --responses runs/regressed.jsonl --baseline runs/candidate.jsonl
+          code=$?
+          if [ "$code" -ne 1 ]; then
+            echo "::error::expected the gate to reject runs/regressed.jsonl with exit 1, got $code"
+            exit 1
+          fi
+          echo "Gate rejected the regressed run as expected."
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: eval-report
+          path: reports/
