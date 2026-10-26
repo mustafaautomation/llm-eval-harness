@@ -105,3 +105,12 @@ def test_calibrate(root: Path, tmp_path: Path) -> None:
     other = tmp_path / "other.jsonl"
     other.write_text('{"id": "zzz", "label": "pass"}\n')
     assert cli.main(["calibrate", "--human", str(human), "--judge", str(other)]) == 2
+
+
+def test_cli_creates_the_report_directory(
+    root: Path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.delenv("GITHUB_STEP_SUMMARY", raising=False)
+    report = tmp_path / "reports" / "nested" / "candidate.json"
+    assert cli.main(_args(root, "candidate.jsonl", "--json", str(report))) == 0
+    assert json.loads(report.read_text())["failures"] == []

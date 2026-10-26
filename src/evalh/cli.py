@@ -34,7 +34,9 @@ def cmd_run(args: argparse.Namespace) -> int:
     markdown = report.to_markdown(summary, failures, baseline)
     print(markdown)
     if args.json:
-        Path(args.json).write_text(report.to_json(summary, failures), encoding="utf-8")
+        out = Path(args.json)
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(report.to_json(summary, failures), encoding="utf-8")
     if step_summary := os.environ.get("GITHUB_STEP_SUMMARY"):
         with open(step_summary, "a", encoding="utf-8") as fh:
             fh.write(markdown)
